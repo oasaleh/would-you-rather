@@ -1,24 +1,24 @@
-.questionsListContainer{
-    display: flex;
-    flex-direction: column ;
-    justify-content: center;
-    width: 1200px;
+.questionsListContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1200px;
 }
 
-.questionContainer{
-    text-align: center;
+.questionContainer {
+  text-align: center;
 }
 
-.questionHeader{
-    display: flex;
-    flex-direction: row;
+.questionHeader {
+  display: flex;
+  flex-direction: column;
 }
-.questionBody{
-    display: inherit;
-    flex-direction: inherit;
+.questionBody {
+  display: inherit;
+  flex-direction: inherit;
 }
-.questionChoices{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.questionChoices {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

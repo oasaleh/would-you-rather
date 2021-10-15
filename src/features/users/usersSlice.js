@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import { _getUsers } from '../../utilities/_DATA';
 
-const initialState = { users: [] };
+const initialState = { users: [], authUser: '' };
 // const initialState = [];
 
 // createAsyncThunk is an action creator. First arg is 'type' and second arg is
@@ -24,6 +24,9 @@ export const usersSlice = createSlice({
     addUser: (state, action) => {
       state.users.push(action.payload);
     },
+    setAuthUser: (state, action) => {
+      state.users.authUser = action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
@@ -43,6 +46,6 @@ export const usersSlice = createSlice({
 export const getAllUsers = (state) => state.users.users;
 export const selectUserById = (state, userId) =>
   state.users.users.find((user) => user.id === userId);
-  
-export const { addUser } = usersSlice.actions;
+
+export const { addUser, setAuthUser } = usersSlice.actions;
 export default usersSlice.reducer;
