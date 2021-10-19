@@ -6,11 +6,11 @@ import Time from './Time';
 import './questionsListStyle.css';
 
 const QuestionExcerpt = ({ question }) => {
-  const user = useSelector((state) => selectUserById(state, question.author));
+  const author = useSelector((state) => selectUserById(state, question.author));
   return (
     <>
       <div className="questionHeader">
-        <h4>{user.name}</h4>
+        <h4>{author.name}</h4>
         <Time timestamp={question.timestamp} />
       </div>
       <div className="questionBody">

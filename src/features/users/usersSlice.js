@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import { _getUsers } from '../../utilities/_DATA';
 
-const initialState = { users: [], authUser: '' };
+const initialState = { users: [], authUser: '', loggedIn: false };
 // const initialState = [];
 
 // createAsyncThunk is an action creator. First arg is 'type' and second arg is
@@ -24,8 +24,29 @@ export const usersSlice = createSlice({
     addUser: (state, action) => {
       state.users.push(action.payload);
     },
+    // setAuthUser: {
+    //   reducer(state, action) {
+    //     state.authUser = action.payload;
+    //   },
+    //   prepare(userId) {
+    //     console.log(userId);
+    //     const loggedInUser = users.find((user) => user.id === userId);
+    //     return {
+    //       payload: {
+    //         loggedInUser,
+    //       },
+    //     };
+    //   },
+    // },
     setAuthUser: (state, action) => {
-      state.users.authUser = action.payload;
+      state.authUser = action.payload;
+    },
+
+    setLoggedIn: (state, action) => {
+      state.loggedIn = action.payload;
+    },
+    setLogOut: (state, action) => {
+      state.loggedIn = false;
     },
   },
   extraReducers(builder) {
@@ -47,5 +68,6 @@ export const getAllUsers = (state) => state.users.users;
 export const selectUserById = (state, userId) =>
   state.users.users.find((user) => user.id === userId);
 
-export const { addUser, setAuthUser } = usersSlice.actions;
+export const { addUser, setAuthUser, setLoggedIn, setLogOut } =
+  usersSlice.actions;
 export default usersSlice.reducer;
