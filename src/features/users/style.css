@@ -1,0 +1,19 @@
+.userCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.5px solid grey;
+  width: 400px;
+}
+.userInfo {
+  display: flex;
+  flex-direction: row;
+}
+.questionsInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0;
+  width: 100%;
+}

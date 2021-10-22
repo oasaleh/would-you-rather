@@ -5,13 +5,23 @@
   max-width: 1200px;
 }
 
+.imgContainer {
+  width: 50px;
+}
+.imgContainer img {
+  width: 100%;
+  border-radius: 8px;
+}
 .questionContainer {
   text-align: center;
+  border: 2px solid grey;
+  margin: 2px;
 }
 
 .questionHeader {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
 }
 .questionBody {
   display: inherit;

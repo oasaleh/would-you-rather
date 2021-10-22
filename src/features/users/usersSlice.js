@@ -24,20 +24,6 @@ export const usersSlice = createSlice({
     addUser: (state, action) => {
       state.users.push(action.payload);
     },
-    // setAuthUser: {
-    //   reducer(state, action) {
-    //     state.authUser = action.payload;
-    //   },
-    //   prepare(userId) {
-    //     console.log(userId);
-    //     const loggedInUser = users.find((user) => user.id === userId);
-    //     return {
-    //       payload: {
-    //         loggedInUser,
-    //       },
-    //     };
-    //   },
-    // },
     setAuthUser: (state, action) => {
       state.authUser = action.payload;
     },
@@ -55,10 +41,10 @@ export const usersSlice = createSlice({
       // state.users.push(...action.payload);
 
       // Or use concat to return a new array (this is not mutating state.)
-      state.users = state.users.concat(action.payload);
+      // state.users = state.users.concat(action.payload);
 
       // Or assign a new value to state (mutation is allowed/not really mutation.)
-      // state.users = action.payload;
+      state.users = action.payload;
     });
   },
 });
@@ -67,7 +53,7 @@ export const usersSlice = createSlice({
 export const getAllUsers = (state) => state.users.users;
 export const selectUserById = (state, userId) =>
   state.users.users.find((user) => user.id === userId);
-
-export const { addUser, setAuthUser, setLoggedIn, setLogOut } =
+export const selectAuthUser = (state) => state.users.authUser;
+export const { addUser, setAuthUser, setLoggedIn, setLogOut, loggedIn } =
   usersSlice.actions;
 export default usersSlice.reducer;

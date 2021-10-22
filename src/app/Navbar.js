@@ -7,18 +7,19 @@ import {
   selectUserById,
   setAuthUser,
   setLoggedIn,
+  selectAuthUser,
 } from '../features/users/usersSlice';
 
 const Navbar = () => {
   const userId = useSelector((state) => state.users.authUser);
   const loggedIn = useSelector((state) => state.users.loggedIn);
+  const authUser = useSelector(selectAuthUser);
 
   const dispatch = useDispatch();
   const users = useSelector(getAllUsers);
   const history = useHistory();
 
   function handleClick() {
-    console.log(loggedIn);
     loggedIn
       ? dispatch(setLoggedIn(false)) && dispatch(setAuthUser(''))
       : history.push(`/login`);
@@ -29,8 +30,9 @@ const Navbar = () => {
         <h2>Would you rather...?</h2>
       </div>
       <div>
-        <p>Welcome, {userId.name}</p>
-
+        {authUser ? <p>Welcome, {authUser.name}</p> : null}
+        <Link to="/home">Dashboard</Link>
+        <Link to="/leaderboard">Leaderboard</Link>
         <button type="button" onClick={handleClick}>
           {loggedIn ? 'Log Out' : 'Log In'}
         </button>
