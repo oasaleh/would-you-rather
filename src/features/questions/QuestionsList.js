@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { selectAuthUser } from '../users/usersSlice';
 import { getAllQuestions, fetchQuestions } from './questionsSlice';
 
@@ -15,7 +14,6 @@ const QuestionsList = () => {
   const questions = [...rawQuestions].sort((a, b) => b.timestamp - a.timestamp);
   const authUser = useSelector(selectAuthUser);
   const questionsStatus = useSelector((state) => state.questions.status);
-  const error = useSelector((state) => state.questions.error);
   const [displayedContent, setDisplayedContent] = useState('');
 
   let content;
@@ -38,7 +36,6 @@ const QuestionsList = () => {
     }
     setDisplayedContent(content);
   }, [questionsStatus, authUser, rawQuestions]);
-  // deleted dispatch from useEffect
 
   function handleClick(e) {
     switch (e.target.value) {

@@ -20,7 +20,7 @@ const App = () => {
             <LoginPage />
           </Route>
 
-          <Route exact path={['/home', '/']}>
+          <Route exact path={['/home/questions', '/home', '/']}>
             <QuestionsList />
           </Route>
 

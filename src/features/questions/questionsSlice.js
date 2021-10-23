@@ -14,7 +14,9 @@ export const fetchQuestions = createAsyncThunk(
     // console.log(response);
     // Converting response from being an array of ONE object -- that has
     // many objects -- to an array of objects.
-    const questions = Object.keys(response).map((key) => response[key]);
+    const questions = Object.keys(response)
+      .map((key) => response[key])
+      .sort((a, b) => b.timestamp - a.timestamp);
 
     return questions;
   },
@@ -26,6 +28,14 @@ export const addQuestion = createAsyncThunk(
     return savedQuestion;
   },
 );
+export const addAnswer = createAsyncThunk(
+  'questions/addAnswer',
+  async (answer) => {
+    const savedAnswer = await _saveQuestionAnswer(answer);
+    return savedAnswer;
+  },
+);
+
 export const questionsSlice = createSlice({
   name: 'questions',
   initialState,
@@ -41,8 +51,10 @@ export const questionsSlice = createSlice({
       })
       .addCase(fetchQuestions.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        // Add any fetched posts to the array
+        state.questions = [];
         state.questions = state.questions.concat(action.payload);
+        // Add any fetched posts to the array
+        // state.questions = action.payload;
       })
       .addCase(fetchQuestions.rejected, (state, action) => {
         state.status = 'failed';
