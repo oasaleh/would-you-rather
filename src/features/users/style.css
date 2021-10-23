@@ -17,3 +17,9 @@
   margin: 0;
   width: 100%;
 }
+.imgContainer {
+  width: 50px;
+}
+.imgContainer img {
+  width: 100%;
+}

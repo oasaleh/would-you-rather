@@ -24,6 +24,7 @@ const QuestionExcerpt = ({ question }) => {
   if (authUser && Object.keys(authUser.answers).includes(question.id)) {
     answeredQuestion = true;
   }
+  // voting mechanism
   return (
     <div className="questionContainer">
       <div className="questionHeader">
@@ -56,6 +57,7 @@ const QuestionExcerpt = ({ question }) => {
           </div>
         </div>
       </div>
+      <Link to={`/question/${question.id}`}>View Question</Link>
     </div>
   );
 };

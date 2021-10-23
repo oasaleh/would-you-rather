@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
-import { _getQuestions } from '../../utilities/_DATA';
+import {
+  _getQuestions,
+  _saveQuestion,
+  _saveQuestionAnswer,
+} from '../../utilities/_DATA';
 
 const initialState = { questions: [], status: 'idle', error: null };
 
@@ -15,12 +19,18 @@ export const fetchQuestions = createAsyncThunk(
     return questions;
   },
 );
-
+export const addQuestion = createAsyncThunk(
+  'questions/addQuestion',
+  async (question) => {
+    const savedQuestion = await _saveQuestion(question);
+    return savedQuestion;
+  },
+);
 export const questionsSlice = createSlice({
   name: 'questions',
   initialState,
   reducers: {
-    addQuestion: (state, action) => {
+    another: (state, action) => {
       state.questions.push(action.payload);
     },
   },
@@ -37,6 +47,9 @@ export const questionsSlice = createSlice({
       .addCase(fetchQuestions.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(addQuestion.fulfilled, (state, action) => {
+        state.questions.push(action.payload);
       });
   },
 });
@@ -46,5 +59,5 @@ export const getAllQuestions = (state) => state.questions.questions;
 export const selectQuestionById = (state, questionId) =>
   state.questions.questions.find((question) => question.id === questionId);
 
-export const { addQuestion } = questionsSlice.actions;
+export const { another } = questionsSlice.actions;
 export default questionsSlice.reducer;

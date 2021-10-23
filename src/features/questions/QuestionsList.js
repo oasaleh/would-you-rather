@@ -1,30 +1,19 @@
 /* eslint-disable no-case-declarations */
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-  Link,
-} from 'react-router-dom';
-import {
-  getAllUsers,
-  selectUserById,
-  selectAuthUser,
-} from '../users/usersSlice';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { selectAuthUser } from '../users/usersSlice';
 import { getAllQuestions, fetchQuestions } from './questionsSlice';
-import Time from './Time';
+
 import './style.css';
 import QuestionExcerpt from './QuestionExcerpt';
+import UserMenu from '../../app/UserMenu';
 
 const QuestionsList = () => {
   const dispatch = useDispatch();
   const rawQuestions = useSelector(getAllQuestions);
   const questions = [...rawQuestions].sort((a, b) => b.timestamp - a.timestamp);
-  // .sort((a, b) => (a.timestamp - b.timestamp));
   const authUser = useSelector(selectAuthUser);
-
   const questionsStatus = useSelector((state) => state.questions.status);
   const error = useSelector((state) => state.questions.error);
   const [displayedContent, setDisplayedContent] = useState('');
@@ -34,13 +23,11 @@ const QuestionsList = () => {
     content = <p>Loading...</p>;
   } else if (questionsStatus === 'succeeded') {
     content = questions.map((question) => (
-      <Link to={`question/${question.id}`}>
-        <QuestionExcerpt
-          class="questionContainer"
-          key={question.id}
-          question={question}
-        />
-      </Link>
+      <QuestionExcerpt
+        class="questionContainer"
+        key={question.id}
+        question={question}
+      />
     ));
   } else if (questionsStatus === 'failed') {
     content = <p>Failed</p>;
@@ -50,7 +37,8 @@ const QuestionsList = () => {
       dispatch(fetchQuestions());
     }
     setDisplayedContent(content);
-  }, [questionsStatus, dispatch, authUser]);
+  }, [questionsStatus, authUser, rawQuestions]);
+  // deleted dispatch from useEffect
 
   function handleClick(e) {
     switch (e.target.value) {
@@ -59,9 +47,7 @@ const QuestionsList = () => {
           (question) => question.author === authUser.id,
         );
         const myQuestionsContent = myQuestions.map((question) => (
-          <Link to={`/question/${question.id}`}>
-            <QuestionExcerpt key={question.id} question={question} />
-          </Link>
+          <QuestionExcerpt key={question.id} question={question} />
         ));
         setDisplayedContent(myQuestionsContent);
         break;
@@ -70,9 +56,7 @@ const QuestionsList = () => {
           Object.keys(authUser.answers).includes(question.id),
         );
         const answeredQuestionsContent = answeredQuestions.map((question) => (
-          <Link to={`/question/${question.id}`}>
-            <QuestionExcerpt key={question.id} question={question} />
-          </Link>
+          <QuestionExcerpt key={question.id} question={question} />
         ));
         setDisplayedContent(answeredQuestionsContent);
         break;
@@ -82,9 +66,7 @@ const QuestionsList = () => {
         );
         const unansweredQuestionsContent = unansweredQuestions.map(
           (question) => (
-            <Link to={`/question/${question.id}`}>
-              <QuestionExcerpt key={question.id} question={question} />
-            </Link>
+            <QuestionExcerpt key={question.id} question={question} />
           ),
         );
         setDisplayedContent(unansweredQuestionsContent);
@@ -96,26 +78,7 @@ const QuestionsList = () => {
 
   return (
     <>
-      {authUser ? (
-        <div>
-          <button type="button" value="allQuestions" onClick={handleClick}>
-            All Questions
-          </button>
-          <button type="button" value="myQuestions" onClick={handleClick}>
-            My Questions
-          </button>
-          <button
-            type="button"
-            value="unansweredQuestions"
-            onClick={handleClick}
-          >
-            Unanswered Questions
-          </button>
-          <button type="button" value="answeredQuestions" onClick={handleClick}>
-            Answered Questions
-          </button>
-        </div>
-      ) : null}
+      {authUser ? <UserMenu handleClick={handleClick} /> : null}
       <article className="questionsListContainer">{displayedContent}</article>
     </>
   );

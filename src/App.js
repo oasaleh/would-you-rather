@@ -1,51 +1,47 @@
-import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-  Link,
-} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import Navbar from './app/Navbar';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import Header from './app/Header';
+import PrivateRoute from './utilities/PrivateRoute';
 import QuestionsList from './features/questions/QuestionsList';
 import QuestionView from './features/questions/QuestionView';
-import QuestionExcerpt from './features/questions/QuestionExcerpt';
 import LoginPage from './features/users/LoginPage';
 import Leaderboard from './features/users/Leaderboard';
 import AddQuestionForm from './features/questions/AddQuestionForm';
-import {
-  getAllUsers,
-  selectUserById,
-  selectAuthUser,
-  fetchUsers,
-} from './features/users/usersSlice';
-import { store } from './app/store';
+import NotFound from './app/NotFound';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <>
-        <Navbar />
+        <Header />
         <Switch>
-          <Route exact path="/leaderboard">
-            <Leaderboard />
-          </Route>
           <Route exact path="/login">
             <LoginPage />
           </Route>
-          <Route exact path="/question/:id">
-            <QuestionView />
-          </Route>
-          <Route exact path="/add">
-            <AddQuestionForm />
-          </Route>
-          <Route path="/home">
+
+          <Route exact path={['/home', '/']}>
             <QuestionsList />
+          </Route>
+
+          <PrivateRoute exact path="/leaderboard">
+            <Leaderboard />
+          </PrivateRoute>
+
+          <PrivateRoute exact path="/question/:id">
+            <QuestionView />
+          </PrivateRoute>
+
+          <PrivateRoute exact path="/add">
+            <AddQuestionForm />
+          </PrivateRoute>
+
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
       </>
-    </Router>
+    </BrowserRouter>
   );
 };
 
