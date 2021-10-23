@@ -2,26 +2,33 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   max-width: 1200px;
+  width: 800px;
 }
 
 .imgContainer {
-  width: 50px;
+  width: 40px;
+  height: auto;
 }
-.imgContainer img {
+.imgContainer > img {
   width: 100%;
   border-radius: 8px;
 }
 .questionContainer {
   text-align: center;
-  border: 2px solid grey;
+  border: 1px solid grey;
   margin: 2px;
+  width: 80%;
+  border-radius: 8px;
+  padding: 5px 15px;
 }
 
 .questionHeader {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
 }
 .questionBody {
   display: inherit;

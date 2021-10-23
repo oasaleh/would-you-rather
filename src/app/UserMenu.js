@@ -1,6 +1,13 @@
 function UserMenu({ handleClick }) {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+      }}
+    >
       <button type="button" value="allQuestions" onClick={handleClick}>
         All Questions
       </button>

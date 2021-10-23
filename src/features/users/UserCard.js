@@ -1,4 +1,4 @@
-import './style.css';
+import './styleUsers.module.css';
 
 const UserCard = ({ user }) => {
   return (
