@@ -34,7 +34,17 @@ const QuestionsList = () => {
     if (questionsStatus === 'idle') {
       dispatch(fetchQuestions());
     }
-    setDisplayedContent(content);
+    if (authUser) {
+      const unansweredQuestions = questions.filter(
+        (question) => !Object.keys(authUser.answers).includes(question.id),
+      );
+      const unansweredQuestionsContent = unansweredQuestions.map((question) => (
+        <QuestionExcerpt key={question.id} question={question} />
+      ));
+      setDisplayedContent(unansweredQuestionsContent);
+    } else {
+      setDisplayedContent(content);
+    }
   }, [questionsStatus, authUser, rawQuestions]);
 
   function handleClick(e) {
